@@ -3,22 +3,26 @@ import { css, useTheme } from '@emotion/react'
 import pizzaHeader from '../../img/pizza-header.jpg'
 
 const headerStyles = (theme) => css`
-	position: relative;
-	width: 100vw;
-	background-color: #0f0f0f;
+	position: fixed;
+	height: 100px;
+	width: 100%;
+	background-color: ${theme.colors.bg.dark};
 	color: ${theme.colors.text.light};
-	display: inline-flex;
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	.header-img {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		background-image: linear-gradient(
 				to right,
 				rgba(0, 0, 0, 0) 60%,
 				rgba(15, 15, 15, 100)
 			),
 			url(${pizzaHeader});
-		height: 100px;
 		width: 250px;
+		height: 100%;
 		background-position: bottom;
 	}
 	img {
@@ -30,6 +34,13 @@ const headerStyles = (theme) => css`
 	ul {
 		display: flex;
 		flex-direction: row;
+		margin: 0;
+	}
+	.logo-text {
+		font-family: ${theme.fonts.fancy}, cursive;
+		font-size: 2rem;
+		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+			1px 1px 0 #000;
 	}
 `
 
@@ -37,7 +48,9 @@ const Header = (props) => {
 	const theme = useTheme()
 	return (
 		<header css={headerStyles(theme)}>
-			<div className='header-img' />
+			<div className='header-img'>
+				<p className='logo-text'>Pizza Website</p>
+			</div>
 			<nav>
 				<ul>
 					<HeaderLink to='/'>Home</HeaderLink>
@@ -67,7 +80,10 @@ const HeaderLink = (props) => {
 				color: ${theme.colors.text.gray};
 			}
 			&:visited {
-				color: ${theme.colors.text.darkGray};
+				color: ${theme.colors.text.light};
+			}
+			&:visited:hover {
+				color: ${theme.colors.text.gray};
 			}
 		}
 	`
