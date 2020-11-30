@@ -21,11 +21,16 @@ const headerStyles = (theme) => css`
 	align-items: center;
 	.icon {
 		color: ${theme.colors.text.light};
-		height: 50px;
-		width: 50px;
-		margin: 0 25px;
+		height: 25px;
+		width: 25px;
+		margin: 1 rem auto;
 		&:hover {
 			color: ${theme.colors.text.darkGray};
+		}
+		@media (min-width: 1080px) {
+			height: 50px;
+			width: 50px;
+			margin: 0 25px;
 		}
 	}
 	@media (min-width: 1080px) {
@@ -63,6 +68,7 @@ const headerStyles = (theme) => css`
 	.header-img {
 		background: none;
 		margin: 0 auto;
+		padding-left: 50px;
 		@media (min-width: 1080px) {
 			display: flex;
 			align-items: center;
@@ -88,8 +94,9 @@ const headerStyles = (theme) => css`
 		}
 	}
 	.open-mobile-nav {
-		height: 100%;
-		padding: 0 1rem;
+		height: 45px;
+		width: 48px;
+		margin: 5px 2px;
 		background: none;
 		border: none;
 		@media (min-width: 1080px) {
@@ -157,7 +164,26 @@ const Header = (props) => {
 				</ul>
 			</nav>
 			<button onClick={toggleNav} className='open-mobile-nav'>
-				<FontAwesomeIcon icon={isMobileNavOpen ? faChevronRight : faBars} />
+				<Transition
+					items={isMobileNavOpen}
+					from={{
+						position: 'absolute',
+						top: '9px',
+						right: isMobileNavOpen ? '14px' : '12px',
+						opacity: 0,
+					}}
+					enter={{ opacity: 1 }}
+					leave={{ opacity: 0 }}
+					config={{ duration: 150 }}
+				>
+					{(isMobileNavOpen) =>
+						isMobileNavOpen
+							? (props) => (
+									<FontAwesomeIcon style={props} icon={faChevronRight} />
+							  )
+							: (props) => <FontAwesomeIcon style={props} icon={faBars} />
+					}
+				</Transition>
 			</button>
 			<Transition
 				items={isMobileNavOpen}
