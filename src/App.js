@@ -32,10 +32,10 @@ const theme = {
 		sm: '.50rem',
 		md: '.75rem',
 		base: '1rem',
-		lg: '1.25rem',
-		xl: '1.5rem',
-		xxl: '1.75rem',
-		xxxl: '2rem',
+		lg: '2rem',
+		xl: '3rem',
+		xxl: '4rem',
+		xxxl: '5rem',
 		huge: '6rem',
 	},
 }
@@ -44,7 +44,10 @@ const appStyles = css`
 	position: relative;
 	min-height: 100vh;
 	.page-wrapper {
-		padding: 100px 0;
+		padding: 50px 0;
+		@media (min-width: 1080px) {
+			padding: 100px 0;
+		}
 	}
 `
 

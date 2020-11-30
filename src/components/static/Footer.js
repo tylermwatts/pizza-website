@@ -7,13 +7,21 @@ const footerStyles = (theme) => css`
 	width: 100%;
 	background-color: ${theme.colors.bg.dark};
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	height: 100px;
+	height: 50px;
 	& > p {
-		margin: 0;
+		margin: 0 1rem;
 		color: ${theme.colors.text.light};
+	}
+	@media (min-width: 1080px) {
+		flex-direction: column;
+		height: 100px;
+		& > p {
+			display: block;
+			margin: 0;
+		}
 	}
 `
 
