@@ -3,61 +3,33 @@ import { css, ThemeProvider } from '@emotion/react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import About from './components/About'
 import Contact from './components/Contact'
+import Footer from './components/Footer'
+import Header from './components/Header'
 import Home from './components/Home'
 import Menu from './components/Menu'
-import Footer from './components/static/Footer'
-import Header from './components/static/Header'
-
-const theme = {
-	colors: {
-		bg: {
-			light: '#f2f2f2',
-			dark: '#0f0f0f',
-		},
-		text: {
-			dark: '#0f0f0f',
-			gray: '#c4c4c4',
-			darkGray: '#adadad',
-			light: '#f2f2f2',
-			white: '#fbfbfb',
-		},
-	},
-	fonts: {
-		heading: 'Roboto Slab',
-		fancy: 'Pacifico',
-		sans: 'Open Sans',
-	},
-	fontSize: {
-		xs: '.25rem',
-		sm: '.50rem',
-		md: '.75rem',
-		base: '1rem',
-		lg: '2rem',
-		xl: '3rem',
-		xxl: '4rem',
-		xxxl: '5rem',
-		huge: '6rem',
-	},
-}
+import ScrollToTop from './components/ScrollToTop'
+import { theme } from './theme'
 
 const appStyles = css`
 	position: relative;
 	min-height: 100vh;
-	.page-wrapper {
-		padding: 50px 0;
-		@media (min-width: 1080px) {
-			padding: 100px 0;
-		}
+`
+
+const pageWrapperStyles = css`
+	padding: 50px 0;
+	@media (min-width: ${theme.breakpoints.md}) {
+		padding: 100px 0;
 	}
 `
 
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
-			<div css={appStyles}>
-				<Router>
+			<Router>
+				<ScrollToTop />
+				<div css={appStyles}>
 					<Header />
-					<div className='page-wrapper'>
+					<div css={pageWrapperStyles}>
 						<Switch>
 							<Route path='/menu'>
 								<Menu />
@@ -74,8 +46,8 @@ function App() {
 						</Switch>
 					</div>
 					<Footer />
-				</Router>
-			</div>
+				</div>
+			</Router>
 		</ThemeProvider>
 	)
 }

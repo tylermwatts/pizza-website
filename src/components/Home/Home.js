@@ -1,30 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { css, useTheme } from '@emotion/react'
-import Hero from './Hero'
+import { useTheme } from '@emotion/react'
+import Hero from '../Hero'
+import { homeStyles } from './styles'
 
 const Home = (props) => {
 	const theme = useTheme()
 	return (
 		<div>
 			<Hero />
-			<div
-				css={css`
-					display: flex;
-					justify-content: center;
-					flex-direction: column;
-					width: 80%;
-					margin: 0 auto;
-					@media (min-width: 1080px) {
-						width: 50%;
-					}
-				`}
-			>
-				<h1
-					css={css`
-						text-align: center;
-						font-family: ${theme.fonts.heading};
-					`}
-				>
+			<div css={homeStyles(theme)}>
+				<h1>
 					We here at the pizza website know a thing or two about pizzas and
 					websites.
 				</h1>

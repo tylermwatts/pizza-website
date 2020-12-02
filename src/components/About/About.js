@@ -1,15 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css, useTheme } from '@emotion/react'
-
-const aboutStyles = (theme) => css`
-	margin: 0 2rem;
-	h1 {
-		color: ${theme.colors.text.dark};
-		font-family: ${theme.fonts.heading}, serif;
-		font-size: ${theme.fontSize.huge};
-		text-align: center;
-	}
-`
+import { useTheme } from '@emotion/react'
+import { aboutStyles } from './styles'
 
 const About = (props) => {
 	const theme = useTheme()

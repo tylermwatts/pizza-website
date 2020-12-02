@@ -1,17 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css, useTheme } from '@emotion/react'
-
-const contactStyles = (theme) => css`
-	display: flex;
-	flex-direction: column;
-	h1 {
-		font-family: ${theme.fonts.heading}, serif;
-		margin: 1rem auto;
-	}
-	p {
-		margin: auto;
-	}
-`
+import { useTheme } from '@emotion/react'
+import { contactStyles } from './styles'
 
 const Contact = (props) => {
 	const theme = useTheme()
