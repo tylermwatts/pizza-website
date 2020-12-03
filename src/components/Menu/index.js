@@ -48,8 +48,7 @@ const Menu = (props) => {
 
 	return (
 		<div css={menuStyles(theme)}>
-			<h1>Check out our menu!</h1>
-			<h2>This week's special:</h2>
+			<h2>This week's special</h2>
 			<DishCard props={special} showHr={false} />
 			<h2>Starters</h2>
 			{starters.map((starter, index) => {
