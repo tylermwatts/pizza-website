@@ -1,7 +1,24 @@
 /** @jsxImportSource @emotion/react */
-import { useTheme } from '@emotion/react'
-import Hero from '../Hero'
-import { homeStyles } from './styles'
+import { css, useTheme } from '@emotion/react'
+import Hero from './Hero'
+
+export const homeStyles = (theme) => css`
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 80%;
+	margin: 0 auto;
+	h1 {
+		text-align: center;
+		font-family: ${theme.fonts.heading};
+	}
+	@media (min-width: ${theme.breakpoints.md}) {
+		width: 50%;
+		h1 {
+			font-size: ${theme.fontSize.xxl};
+		}
+	}
+`
 
 const Home = (props) => {
 	const theme = useTheme()

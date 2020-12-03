@@ -1,4 +1,5 @@
-import { css } from '@emotion/react'
+/** @jsxImportSource @emotion/react */
+import { css, useTheme } from '@emotion/react'
 
 export const footerStyles = (theme) => css`
 	position: absolute;
@@ -23,3 +24,15 @@ export const footerStyles = (theme) => css`
 		}
 	}
 `
+
+const Footer = (props) => {
+	const theme = useTheme()
+	return (
+		<footer css={footerStyles(theme)}>
+			<p>© Tyler Watts 2020</p>
+			<p>All rights reserved.</p>
+		</footer>
+	)
+}
+
+export default Footer
