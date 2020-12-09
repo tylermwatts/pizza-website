@@ -2,7 +2,7 @@
 import { css, useTheme } from '@emotion/react'
 import Hero from './Hero'
 
-export const homeStyles = (theme) => css`
+const homeStyles = (theme) => css`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
