@@ -1,4 +1,8 @@
-export const theme = {
+import { SerializedStyles } from '@emotion/react';
+export type ThemeValues = Record<string, any>
+export type ThemedFunctionStyles = (theme: ThemeValues) => SerializedStyles
+
+export const theme: ThemeValues = {
 	breakpoints: {
 		xs: '375px',
 		sm: '768px',

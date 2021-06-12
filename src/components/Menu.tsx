@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { gql, useQuery } from '@apollo/client'
 import { css, useTheme } from '@emotion/react'
+import { ThemedFunctionStyles } from '../theme'
 
-const menuStyles = (theme) => css`
+const menuStyles: ThemedFunctionStyles = (theme) => css`
 	background-color: ${theme.colors.bg.light};
 	display: flex;
 	flex-direction: column;
@@ -39,7 +40,7 @@ const menuStyles = (theme) => css`
 	}
 `
 
-const dishCardStyles = (theme) => css`
+const dishCardStyles: ThemedFunctionStyles = (theme) => css`
 	margin: 0 auto;
 	width: 80%;
 	@media (min-width: ${theme.breakpoints.md}) {
@@ -78,28 +79,34 @@ const MENU_ITEMS = gql`
 	}
 `
 
-const Menu = (props) => {
+export type Dish = {
+	title: string
+	description: string
+	price: string
+}
+
+const Menu: React.VFC = () => {
 	const theme = useTheme()
 	const { loading, error, data } = useQuery(MENU_ITEMS)
 
 	if (loading) return null
-	if (error) return `Error! ${error.message}`
+	if (error) return <div>`Error! ${error.message}`</div>
 
-	const special = data.special
-	const starters = data.starterCollection.items
-	const pizzas = data.pizzaCollection.items
-	const desserts = data.dessertCollection.items
+	const special: Dish = data.special
+	const starters: Dish[] = data.starterCollection.items
+	const pizzas: Dish[] = data.pizzaCollection.items
+	const desserts: Dish[] = data.dessertCollection.items
 
 	return (
 		<div css={menuStyles(theme)}>
 			<h2>This week's special</h2>
-			<DishCard props={special} showHr={false} />
+			<DishCard dish={special} showHr={false} />
 			<h2>Starters</h2>
 			{starters.map((starter, index) => {
 				return (
 					<DishCard
 						key={`starter-${index}`}
-						props={starter}
+						dish={starter}
 						showHr={index !== starters.length - 1}
 					/>
 				)
@@ -109,7 +116,7 @@ const Menu = (props) => {
 				return (
 					<DishCard
 						key={`pizza-${index}`}
-						props={pizza}
+						dish={pizza}
 						showHr={index !== pizzas.length - 1}
 					/>
 				)
@@ -119,7 +126,7 @@ const Menu = (props) => {
 				return (
 					<DishCard
 						key={`pizza-${index}`}
-						props={dessert}
+						dish={dessert}
 						showHr={index !== desserts.length - 1}
 					/>
 				)
@@ -128,14 +135,19 @@ const Menu = (props) => {
 	)
 }
 
-const DishCard = ({ props, showHr = true }) => {
+export interface DishCardProps {
+	dish: Dish
+	showHr: boolean
+}
+
+const DishCard: React.VFC<DishCardProps> = ({ dish, showHr }) => {
 	const theme = useTheme()
 
 	return (
 		<div css={dishCardStyles(theme)}>
-			<h3>{props.title}</h3>
-			<p>{props.description}</p>
-			<p>${props.price}</p>
+			<h3>{dish.title}</h3>
+			<p>{dish.description}</p>
+			<p>${dish.price}</p>
 			{showHr && <hr />}
 		</div>
 	)

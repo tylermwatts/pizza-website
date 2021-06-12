@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { ApolloClient, ApolloProvider, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals'
 
 const { REACT_APP_SPACE_ID, REACT_APP_ACCESS_TOKEN } = process.env
 
-const client = new ApolloClient({
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 	uri: `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}?access_token=${REACT_APP_ACCESS_TOKEN}`,
 	cache: new InMemoryCache(),
 })

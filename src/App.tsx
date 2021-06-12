@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, ThemeProvider } from '@emotion/react'
+import { css, SerializedStyles, ThemeProvider } from '@emotion/react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import About from './components/About'
 import Contact from './components/Contact'
@@ -10,19 +10,19 @@ import Menu from './components/Menu'
 import ScrollToTop from './components/ScrollToTop'
 import { theme } from './theme'
 
-const appStyles = css`
+const appStyles: SerializedStyles = css`
 	position: relative;
 	min-height: 100vh;
 `
 
-const pageWrapperStyles = css`
+const pageWrapperStyles: SerializedStyles = css`
 	padding: 50px 0;
 	@media (min-width: ${theme.breakpoints.md}) {
 		padding: 100px 0;
 	}
 `
 
-function App() {
+const App: React.VFC = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<Router>

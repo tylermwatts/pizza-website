@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css, useTheme } from '@emotion/react'
+import { ThemedFunctionStyles, ThemeValues } from '../theme'
 
-export const contactStyles = (theme) => css`
+const contactStyles: ThemedFunctionStyles = (theme: ThemeValues) => css`
 	display: flex;
 	flex-direction: column;
 	h1 {
@@ -13,7 +14,7 @@ export const contactStyles = (theme) => css`
 	}
 `
 
-const Contact = (props) => {
+const Contact: React.VFC = () => {
 	const theme = useTheme()
 	return (
 		<div css={contactStyles(theme)}>

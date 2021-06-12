@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css, useTheme } from '@emotion/react'
+import { ThemedFunctionStyles, ThemeValues } from '../theme'
 
-export const footerStyles = (theme) => css`
+const footerStyles: ThemedFunctionStyles = (theme: ThemeValues) => css`
 	position: absolute;
 	bottom: 0;
 	width: 100%;
@@ -25,11 +26,11 @@ export const footerStyles = (theme) => css`
 	}
 `
 
-const Footer = (props) => {
+const Footer: React.VFC = () => {
 	const theme = useTheme()
 	return (
 		<footer css={footerStyles(theme)}>
-			<p>© Tyler Watts 2020</p>
+			<p>© Tyler Watts 2021</p>
 			<p>All rights reserved.</p>
 		</footer>
 	)

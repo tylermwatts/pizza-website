@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css, useTheme } from '@emotion/react'
+import { ThemedFunctionStyles } from '../theme'
 import Hero from './Hero'
 
-const homeStyles = (theme) => css`
+const homeStyles: ThemedFunctionStyles = (theme) => css`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -20,7 +21,7 @@ const homeStyles = (theme) => css`
 	}
 `
 
-const Home = (props) => {
+const Home: React.VFC = () => {
 	const theme = useTheme()
 	return (
 		<div>

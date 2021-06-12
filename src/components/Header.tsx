@@ -1,18 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { gql, useQuery } from '@apollo/client'
-import { css, useTheme } from '@emotion/react'
+import { css, SerializedStyles, Theme, useTheme } from '@emotion/react'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import {
 	faFacebook,
 	faInstagram,
-	faTwitter,
+	faTwitter
 } from '@fortawesome/free-brands-svg-icons'
 import { faBars, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import { CSSProperties, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { animated, Transition } from 'react-spring/renderprops'
+import { ThemedFunctionStyles, ThemeValues } from '../theme'
 
-const headerStyles = (theme) => css`
+const headerStyles: ThemedFunctionStyles = (theme) => css`
 	position: fixed;
 	width: 100%;
 	background-color: ${theme.colors.bg.dark};
@@ -42,7 +44,7 @@ const headerStyles = (theme) => css`
 	}
 `
 
-const desktopNavStyles = (theme) => css`
+const desktopNavStyles: ThemedFunctionStyles = (theme) => css`
 	display: none;
 	@media (min-width: ${theme.breakpoints.md}) {
 		display: block;
@@ -52,7 +54,7 @@ const desktopNavStyles = (theme) => css`
 	}
 `
 
-const headerImgStyles = (theme, headerBgUrl) => css`
+const headerImgStyles: (theme: ThemeValues, headerBgUrl: string) => SerializedStyles = (theme, headerBgUrl) => css`
 	background: none;
 	margin: 0 auto;
 	padding-left: 50px;
@@ -75,7 +77,7 @@ const headerImgStyles = (theme, headerBgUrl) => css`
 	}
 `
 
-const iconStackStyles = (theme) => css`
+const iconStackStyles: ThemedFunctionStyles = (theme) => css`
 	display: none;
 	@media (min-width: ${theme.breakpoints.md}) {
 		display: block;
@@ -84,7 +86,7 @@ const iconStackStyles = (theme) => css`
 	}
 `
 
-const logoTextStyles = (theme) => css`
+const logoTextStyles: ThemedFunctionStyles = (theme) => css`
 	margin: 0 auto;
 	font-family: ${theme.fonts.fancy}, cursive;
 	font-size: 1.5rem;
@@ -95,7 +97,7 @@ const logoTextStyles = (theme) => css`
 	}
 `
 
-const openMobileNavStyles = (theme) => css`
+const openMobileNavStyles: ThemedFunctionStyles = (theme) => css`
 	height: 45px;
 	width: 48px;
 	margin: 5px 2px;
@@ -106,7 +108,7 @@ const openMobileNavStyles = (theme) => css`
 	}
 `
 
-const mobileNavStyles = (theme) => css`
+const mobileNavStyles: ThemedFunctionStyles = (theme) => css`
 	display: block;
 	background-color: ${theme.colors.bg.dark};
 	position: absolute;
@@ -123,7 +125,7 @@ const mobileNavStyles = (theme) => css`
 	}
 `
 
-const mobileIconStackStyles = css`
+const mobileIconStackStyles: SerializedStyles = css`
 	display: flex;
 	flex-direction: column;
 	& > * {
@@ -131,7 +133,7 @@ const mobileIconStackStyles = css`
 	}
 `
 
-const headerLinkStyles = (theme) => css`
+const headerLinkStyles: ThemedFunctionStyles = (theme) => css`
 	list-style: none;
 	font-family: ${theme.fonts.fancy}, cursive;
 	width: auto;
@@ -161,7 +163,7 @@ const headerLinkStyles = (theme) => css`
 	}
 `
 
-const navLinkStyles = (theme) => css`
+const navLinkStyles: ThemedFunctionStyles = (theme) => css`
 	width: 100%;
 	font-size: 1.5rem;
 	color: ${theme.colors.text.light};
@@ -172,7 +174,7 @@ const navLinkStyles = (theme) => css`
 	}
 `
 
-const iconStyles = (theme) => css`
+const iconStyles: ThemedFunctionStyles = (theme) => css`
 	color: ${theme.colors.text.light};
 	height: 25px;
 	width: 25px;
@@ -197,15 +199,15 @@ const GET_HEADER_IMAGE = gql`
 	}
 `
 
-const Header = (props) => {
-	const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+const Header: React.VFC = () => {
+	const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false)
 
-	const theme = useTheme()
+	const theme: Theme = useTheme()
 
 	const { loading, error, data } = useQuery(GET_HEADER_IMAGE)
 
 	if (loading) return null
-	if (error) return `Error! ${error.message}`
+	if (error) return <div>`Error! ${error.message}`</div>
 
 	const { headerBgUrl } = data.heroImage.image
 
@@ -250,9 +252,9 @@ const Header = (props) => {
 					{(isMobileNavOpen) =>
 						isMobileNavOpen
 							? (props) => (
-									<FontAwesomeIcon style={props} icon={faChevronRight} />
+									<FontAwesomeIcon style={props as CSSProperties} icon={faChevronRight} />
 							  )
-							: (props) => <FontAwesomeIcon style={props} icon={faBars} />
+							: (props) => <FontAwesomeIcon style={props as CSSProperties} icon={faBars} />
 					}
 				</Transition>
 			</button>
@@ -302,29 +304,39 @@ const Header = (props) => {
 	)
 }
 
-const HeaderLink = (props) => {
+export interface HeaderLinkProps {
+	to: string
+	toggleNav?: () => any;
+}
+
+const HeaderLink: React.FC<HeaderLinkProps> = ({to, toggleNav, children}) => {
 	const theme = useTheme()
 
 	return (
-		<li onClick={props?.toggleNav} css={headerLinkStyles(theme)}>
+		<li onClick={toggleNav} css={headerLinkStyles(theme)}>
 			<NavLink
 				activeClassName='nav-link-active'
 				css={navLinkStyles(theme)}
 				exact
-				to={props.to}
+				to={to}
 			>
-				{props.children}
+				{children}
 			</NavLink>
 		</li>
 	)
 }
 
-const IconLink = (props) => {
+export interface IconLinkProps {
+	icon: IconProp;
+	to: string
+}
+
+const IconLink: React.VFC<IconLinkProps> = ({icon, to}) => {
 	const theme = useTheme()
 
 	return (
-		<a target='_blank' rel='noreferrer' href={props.to}>
-			<FontAwesomeIcon css={iconStyles(theme)} icon={props.icon} />
+		<a target='_blank' rel='noreferrer' href={to}>
+			<FontAwesomeIcon css={iconStyles(theme)} icon={icon} />
 		</a>
 	)
 }

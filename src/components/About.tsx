@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { css, useTheme } from '@emotion/react'
+import { css, Theme, useTheme } from '@emotion/react'
+import React from 'react'
+import { ThemedFunctionStyles } from '../theme'
 
-export const aboutStyles = (theme) => css`
+const aboutStyles: ThemedFunctionStyles = (theme) => css`
 	margin: 0 2rem;
 	h1 {
 		color: ${theme.colors.text.black};
@@ -16,8 +18,8 @@ export const aboutStyles = (theme) => css`
 	}
 `
 
-const About = (props) => {
-	const theme = useTheme()
+const About: React.VFC = () => {
+	const theme: Theme = useTheme()
 	return (
 		<div css={aboutStyles(theme)}>
 			<h1>All about my pizza website</h1>
