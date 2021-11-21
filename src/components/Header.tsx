@@ -5,7 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import {
 	faFacebook,
 	faInstagram,
-	faTwitter
+	faTwitter,
 } from '@fortawesome/free-brands-svg-icons'
 import { faBars, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -54,7 +54,10 @@ const desktopNavStyles: ThemedFunctionStyles = (theme) => css`
 	}
 `
 
-const headerImgStyles: (theme: ThemeValues, headerBgUrl: string) => SerializedStyles = (theme, headerBgUrl) => css`
+const headerImgStyles: (
+	theme: ThemeValues,
+	headerBgUrl: string
+) => SerializedStyles = (theme, headerBgUrl) => css`
 	background: none;
 	margin: 0 auto;
 	padding-left: 50px;
@@ -207,7 +210,7 @@ const Header: React.VFC = () => {
 	const { loading, error, data } = useQuery(GET_HEADER_IMAGE)
 
 	if (loading) return null
-	if (error) return <div>`Error! ${error.message}`</div>
+	if (error) return <div>{`Error! ${error.message}`}</div>
 
 	const { headerBgUrl } = data.heroImage.image
 
@@ -252,9 +255,17 @@ const Header: React.VFC = () => {
 					{(isMobileNavOpen) =>
 						isMobileNavOpen
 							? (props) => (
-									<FontAwesomeIcon style={props as CSSProperties} icon={faChevronRight} />
+									<FontAwesomeIcon
+										style={props as CSSProperties}
+										icon={faChevronRight}
+									/>
 							  )
-							: (props) => <FontAwesomeIcon style={props as CSSProperties} icon={faBars} />
+							: (props) => (
+									<FontAwesomeIcon
+										style={props as CSSProperties}
+										icon={faBars}
+									/>
+							  )
 					}
 				</Transition>
 			</button>
@@ -306,10 +317,10 @@ const Header: React.VFC = () => {
 
 export interface HeaderLinkProps {
 	to: string
-	toggleNav?: () => any;
+	toggleNav?: () => any
 }
 
-const HeaderLink: React.FC<HeaderLinkProps> = ({to, toggleNav, children}) => {
+const HeaderLink: React.FC<HeaderLinkProps> = ({ to, toggleNav, children }) => {
 	const theme = useTheme()
 
 	return (
@@ -327,11 +338,11 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({to, toggleNav, children}) => {
 }
 
 export interface IconLinkProps {
-	icon: IconProp;
+	icon: IconProp
 	to: string
 }
 
-const IconLink: React.VFC<IconLinkProps> = ({icon, to}) => {
+const IconLink: React.VFC<IconLinkProps> = ({ icon, to }) => {
 	const theme = useTheme()
 
 	return (

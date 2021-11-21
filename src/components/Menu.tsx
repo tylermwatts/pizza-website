@@ -90,7 +90,7 @@ const Menu: React.VFC = () => {
 	const { loading, error, data } = useQuery(MENU_ITEMS)
 
 	if (loading) return null
-	if (error) return <div>`Error! ${error.message}`</div>
+	if (error) return <div>{`Error! ${error.message}`}</div>
 
 	const special: Dish = data.special
 	const starters: Dish[] = data.starterCollection.items
@@ -147,7 +147,7 @@ const DishCard: React.VFC<DishCardProps> = ({ dish, showHr }) => {
 		<div css={dishCardStyles(theme)}>
 			<h3>{dish.title}</h3>
 			<p>{dish.description}</p>
-			<p>${dish.price}</p>
+			<p>{dish.price}</p>
 			{showHr && <hr />}
 		</div>
 	)

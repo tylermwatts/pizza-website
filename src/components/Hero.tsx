@@ -17,7 +17,10 @@ const heroStyles: ThemedFunctionStyles = (theme) => css`
 	}
 `
 
-const pizzaHeroStyles: (theme: ThemeValues, backgroundUrl: string) => SerializedStyles = (theme, backgroundUrl) => css`
+const pizzaHeroStyles: (
+	theme: ThemeValues,
+	backgroundUrl: string
+) => SerializedStyles = (theme, backgroundUrl) => css`
 	background-image: url(${backgroundUrl});
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -47,7 +50,7 @@ const Hero: React.VFC = () => {
 	const { loading, error, data } = useQuery(GET_HERO_LARGE)
 
 	if (loading) return null
-	if (error) return <div>`Error! ${error.message}`</div>
+	if (error) return <div>{`Error! ${error.message}`}</div>
 
 	const { url: backgroundUrl } = data.heroImage.image
 
