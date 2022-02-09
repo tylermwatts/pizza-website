@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { gql, useQuery } from '@apollo/client'
 import { css, SerializedStyles, Theme, useTheme } from '@emotion/react'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -9,9 +8,11 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import { faBars, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CSSProperties, useState } from 'react'
+import { CSSProperties } from 'react'
 import { NavLink } from 'react-router-dom'
 import { animated, Transition } from 'react-spring/renderprops'
+import { useQueryContext } from '../context/QueryContext'
+import { useToggle } from '../hooks/useToggle'
 import { ThemedFunctionStyles, ThemeValues } from '../theme'
 
 const headerStyles: ThemedFunctionStyles = (theme) => css`
@@ -192,31 +193,17 @@ const iconStyles: ThemedFunctionStyles = (theme) => css`
 	}
 `
 
-const GET_HEADER_IMAGE = gql`
-	query GetHeaderImage {
-		heroImage(id: "1HZgnvhPR3ReB7W1mQ16uP") {
-			image {
-				headerBgUrl: url
-			}
-		}
-	}
-`
-
 const Header: React.VFC = () => {
-	const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false)
-
 	const theme: Theme = useTheme()
+	const [isMobileNavOpen, { toggle: toggleNav }] = useToggle()
+	const { getHeaderImage } = useQueryContext()
 
-	const { loading, error, data } = useQuery(GET_HEADER_IMAGE)
+	const { loading, error, data } = getHeaderImage
 
 	if (loading) return null
 	if (error) return <div>{`Error! ${error.message}`}</div>
 
-	const { headerBgUrl } = data.heroImage.image
-
-	const toggleNav = () => {
-		setIsMobileNavOpen(!isMobileNavOpen)
-	}
+	const { headerBgUrl } = data!.heroImage.image
 
 	return (
 		<header css={headerStyles(theme)}>

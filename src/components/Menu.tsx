@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { gql, useQuery } from '@apollo/client'
 import { css, useTheme } from '@emotion/react'
+import { useQueryContext } from '../context/QueryContext'
 import { ThemedFunctionStyles } from '../theme'
 
 const menuStyles: ThemedFunctionStyles = (theme) => css`
@@ -48,37 +48,6 @@ const dishCardStyles: ThemedFunctionStyles = (theme) => css`
 	}
 `
 
-const MENU_ITEMS = gql`
-	query GetMenuItems {
-		special(id: "187WuNBMK1nc5Y8jU7DPUq") {
-			title
-			description
-			price
-		}
-		starterCollection(order: rank_ASC) {
-			items {
-				title
-				description
-				price
-			}
-		}
-		pizzaCollection(order: rank_ASC) {
-			items {
-				title
-				description
-				price
-			}
-		}
-		dessertCollection(order: rank_ASC) {
-			items {
-				title
-				description
-				price
-			}
-		}
-	}
-`
-
 export type Dish = {
 	title: string
 	description: string
@@ -87,15 +56,17 @@ export type Dish = {
 
 const Menu: React.VFC = () => {
 	const theme = useTheme()
-	const { loading, error, data } = useQuery(MENU_ITEMS)
+	const { getMenuItems } = useQueryContext()
+
+	const { loading, error, data } = getMenuItems
 
 	if (loading) return null
 	if (error) return <div>{`Error! ${error.message}`}</div>
 
-	const special: Dish = data.special
-	const starters: Dish[] = data.starterCollection.items
-	const pizzas: Dish[] = data.pizzaCollection.items
-	const desserts: Dish[] = data.dessertCollection.items
+	const special: Dish = data!.special
+	const starters: Dish[] = data!.starterCollection.items
+	const pizzas: Dish[] = data!.pizzaCollection.items
+	const desserts: Dish[] = data!.dessertCollection.items
 
 	return (
 		<div css={menuStyles(theme)}>

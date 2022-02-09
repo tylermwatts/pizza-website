@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { gql, useQuery } from '@apollo/client'
 import { css, SerializedStyles, useTheme } from '@emotion/react'
+import { useQueryContext } from '../context/QueryContext'
 import { ThemedFunctionStyles, ThemeValues } from '../theme'
 
 const heroStyles: ThemedFunctionStyles = (theme) => css`
@@ -34,25 +34,16 @@ const pizzaHeroStyles: (
 	}
 `
 
-const GET_HERO_LARGE = gql`
-	query GetHeroLarge {
-		heroImage(id: "4wZ7sB1RTr1Jm7UgLbyXHA") {
-			image {
-				url
-			}
-		}
-	}
-`
-
 const Hero: React.VFC = () => {
 	const theme = useTheme()
+	const { getHeroImage } = useQueryContext()
 
-	const { loading, error, data } = useQuery(GET_HERO_LARGE)
+	const { loading, error, data } = getHeroImage
 
 	if (loading) return null
 	if (error) return <div>{`Error! ${error.message}`}</div>
 
-	const { url: backgroundUrl } = data.heroImage.image
+	const { url: backgroundUrl } = data!.heroImage.image
 
 	return (
 		<div css={heroStyles(theme)}>

@@ -1,7 +1,13 @@
-import { ApolloClient, ApolloProvider, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import {
+	ApolloClient,
+	ApolloProvider,
+	InMemoryCache,
+	NormalizedCacheObject,
+} from '@apollo/client'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
+import QueryContextProvider from './context/QueryContext'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 
@@ -15,7 +21,9 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 ReactDOM.render(
 	<React.StrictMode>
 		<ApolloProvider client={client}>
-			<App />
+			<QueryContextProvider>
+				<App />
+			</QueryContextProvider>
 		</ApolloProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
